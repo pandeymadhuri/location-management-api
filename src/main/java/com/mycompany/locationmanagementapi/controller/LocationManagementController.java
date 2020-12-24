@@ -2,6 +2,10 @@ package com.mycompany.locationmanagementapi.controller;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,13 +21,23 @@ import com.mycompany.locationmanagementapi.repository.LocationRepository;
 @RequestMapping("/lma/v1")
 public class LocationManagementController {
 	
+	@Autowired
 	private LocationRepository locationRepository;
 	
 	@GetMapping("/locations")
-	public List<Location> getAllLoctions(){
-		List<Location> Locations = locationRepository.findAll();
-		System.out.println("getAllLocations");
-		return Locations;
+	public ResponseEntity<List<Location>> getAllLoctions(){
+		List<Location> locations = null;
+		try {
+			locations = locationRepository.findAll();
+            if (locations != null && locations.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(locations, HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+       
+		
 	}
 	
 	@GetMapping("/locations/{id}")
