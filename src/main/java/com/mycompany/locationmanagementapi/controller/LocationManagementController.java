@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 import com.mycompany.locationmanagementapi.entity.Location;
 import com.mycompany.locationmanagementapi.repository.LocationRepository;
 
@@ -36,47 +39,73 @@ public class LocationManagementController {
         }catch (Exception ex){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-       
-		
-	}
+   	}
 	
 	@GetMapping("/locations/{id}")
-	public Location getLocationDetal(@PathVariable("id") Long id ){
-		System.out.println("getLocationDetal");
-		Optional<Location> locationOpt = locationRepository.findById(id);
-		if(locationOpt.isPresent()){
-			return locationOpt.get();
+	public ResponseEntity<Location> getLocationDetal(@PathVariable("id") Long id ){
+		Optional<Location> locationOpt = null;
+		try{	
+			locationOpt = locationRepository.findById(id);
+			if(!locationOpt.isPresent()){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		
-		return null;
+		}catch(Exception ex){
+			return new ResponseEntity<Location>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Location>(locationOpt.get(),HttpStatus.OK);
 	}
 	
 	@PostMapping("/locations")
-	public void createLocation(@RequestBody Location location){
-		System.out.println("createLocation");
-		locationRepository.save(location);
+	public ResponseEntity<Location> createLocation(@RequestBody Location location){
+		Location loc = null;
+		try{
+			loc = locationRepository.save(location);
+		}catch(Exception ex){
+			return  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(loc, HttpStatus.OK);
 	}
 	
 	@PutMapping("/locations")
-	public void updateLocation(@RequestBody Location location){
-		System.out.println("updateLocation");
+	public ResponseEntity<Location> updateLocation(@RequestBody Location location){
 		Optional<Location> locationInDbOpt = locationRepository.findById(location.getId());
-		if(locationInDbOpt.isPresent()){
-			if(location.getLat() != null){
-				locationInDbOpt.get().setLat(location.getLat());
+		Location location1 = null;
+		try{
+			if(locationInDbOpt.isPresent()){
+				if(location.getLat() != null){
+					locationInDbOpt.get().setLat(location.getLat());
+				}
+				if(location.getLon() != null){
+					locationInDbOpt.get().setLon(location.getLon());
+				}
+				if(location.getType() != null){
+					locationInDbOpt.get().setType(location.getType());
+				}
+				location1 = locationRepository.save(locationInDbOpt.get());
+				return new ResponseEntity<Location>(location1,HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
-			if(location.getLon() != null){
-				locationInDbOpt.get().setLon(location.getLon());
-			}
-			if(location.getType() != null){
-				locationInDbOpt.get().setType(location.getType());
-			}
+		
+		}catch(Exception ex){
+			return new ResponseEntity<Location>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@DeleteMapping("/locations/{id}")
-	public void deleteLocation(@PathVariable Long id){
-		System.out.println("deleteLocation");
-		locationRepository.deleteById(id);
+	public ResponseEntity<Location> deleteLocation(@PathVariable Long id){
+		Optional<Location> locationInDbOpt = null;
+		try{
+			locationInDbOpt = locationRepository.findById(id);
+			if(locationInDbOpt.isPresent()){
+				locationRepository.deleteById(id);
+				return new ResponseEntity<>(locationInDbOpt.get(), HttpStatus.NO_CONTENT);
+			}else{
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		}catch(Exception ex){
+			
+			return new ResponseEntity<Location>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }
