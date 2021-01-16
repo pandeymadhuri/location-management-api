@@ -3,6 +3,8 @@ package com.mycompany.locationmanagementapi.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,14 +62,14 @@ public class LocationManagementController {
 	}
 	
 	@PostMapping("/locations")
-	public @ResponseBody ResponseEntity<Location> createLocation(@RequestBody LocationDTO locationDTO ){
+	public @ResponseBody ResponseEntity<Location> createLocation(@Valid @RequestBody LocationDTO locationDTO ){
 		Location loc = null;  
 		loc = locationManagementService.createLocation(locationDTO);
 		return new ResponseEntity<Location>(loc, HttpStatus.OK);
 	}
 	
 	@PutMapping("/locations")
-	public ResponseEntity<Location> updateLocation(@RequestBody Location location)throws BusinessException{
+	public ResponseEntity<Location> updateLocation(@Valid @RequestBody Location location)throws BusinessException{
 		Location updatedLocation = locationManagementService.updateLocation(location);
 		return new ResponseEntity<Location>(updatedLocation,HttpStatus.OK);			
 	}

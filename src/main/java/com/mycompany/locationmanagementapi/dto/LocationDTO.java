@@ -2,11 +2,20 @@ package com.mycompany.locationmanagementapi.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class LocationDTO {
 
+	@NotBlank(message = "Type is mandatory")
 	private String type;
+	
 	private List<Long> serviceIds;
+	
+	@NotNull(message = "Address is mandatory")
 	private Long addressId;
+	
+	@NotNull(message = "User is mandatory")
 	private Long userId;
 	
 	public Long getUserId() {
