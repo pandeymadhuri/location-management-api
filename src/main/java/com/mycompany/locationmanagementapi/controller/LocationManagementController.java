@@ -52,6 +52,7 @@ public class LocationManagementController {
 	
 	@GetMapping("/locations/{id}")
 	public ResponseEntity<Location> getLocationDetal(@PathVariable("id") Long id ){
+		//new changes
 		Optional<Location> locationOpt = null;	
 			locationOpt = locationManagementService.getLocationDetail(id);
 			if(!locationOpt.isPresent()){
