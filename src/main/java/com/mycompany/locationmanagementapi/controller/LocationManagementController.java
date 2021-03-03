@@ -39,10 +39,7 @@ public class LocationManagementController {
 	
 	@GetMapping("/locations")
 	public ResponseEntity<List<Location>> getAllLoctions(){
-		//LOGGER.info("getAllLoctions function made a change");
-		System.out.println("adding new printline in getAllLocations in git");
-		System.out.println("adding new printline in getAllLocations in git");
-		System.out.println("adding new printline in getAllLocations in git");
+
 		System.out.println("adding new printline in getAllLocations in git");
 		List<Location> locations = null;
 		locations = locationManagementService.getAllLoctions();
@@ -59,9 +56,16 @@ public class LocationManagementController {
 		Optional<Location> locationOpt = null;
 		//new changes
 		//old change gone
+
 		//new code added
 		int b = 3;
 		System.out.println(b);
+
+		//System.out.println(c);
+		//new code added
+				//int b = 3;
+				System.out.println(b);
+
 			locationOpt = locationManagementService.getLocationDetail(id);
 			if(!locationOpt.isPresent()){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
