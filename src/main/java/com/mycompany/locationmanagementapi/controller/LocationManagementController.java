@@ -39,6 +39,7 @@ public class LocationManagementController {
 	
 	@GetMapping("/locations")
 	public ResponseEntity<List<Location>> getAllLoctions(){
+		System.out.print("change made by Ranjan");
 		System.out.println("change by another dev");
 		System.out.println("adding new printline in getAllLocations in git");
 		List<Location> locations = null;
