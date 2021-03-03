@@ -54,9 +54,7 @@ public class LocationManagementController {
 	public ResponseEntity<Location> getLocationDetal(@PathVariable("id") Long id ){
 		Optional<Location> locationOpt = null;
 		//new changes
-		int a = 5;
-		int b = 10;
-		int c = a+b;
+		//old change gone
 		System.out.println(c);
 			locationOpt = locationManagementService.getLocationDetail(id);
 			if(!locationOpt.isPresent()){
