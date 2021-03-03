@@ -55,7 +55,9 @@ public class LocationManagementController {
 		Optional<Location> locationOpt = null;
 		//new changes
 		//old change gone
-		System.out.println(c);
+		//new code added
+		int b = 3;
+		System.out.println(b);
 			locationOpt = locationManagementService.getLocationDetail(id);
 			if(!locationOpt.isPresent()){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
