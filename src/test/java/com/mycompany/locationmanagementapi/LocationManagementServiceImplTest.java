@@ -34,12 +34,12 @@ public class LocationManagementServiceImplTest {
 
 		 this.locList=new ArrayList<Location>();
 		 
-		 Location location = new Location (1L,"atm","20123.56","61.567");
-	 	 this.locList.add(location);
-	 	 location = new Location (2L,"atm","20123.56","61.567");
-	 	 this.locList.add(location);
-	 	 location = new Location (3L,"atm","20123.56","61.567");
-	 	 this.locList.add(location);
+//		 Location location = new Location (1L,"atm","20123.56","61.567");
+//	 	 this.locList.add(location);
+//	 	 location = new Location (2L,"atm","20123.56","61.567");
+//	 	 this.locList.add(location);
+//	 	 location = new Location (3L,"atm","20123.56","61.567");
+//	 	 this.locList.add(location);
 	}
 	
 	@Test
@@ -84,8 +84,8 @@ public class LocationManagementServiceImplTest {
 	//@Ignore
 	public void createLocationTest(){
 		when(locationRepository.save(this.locList.get(0))).thenReturn(this.locList.get(0));
-		Location locationActual = locationManagementService.createLocation(this.locList.get(0));
-		assertEquals(this.locList.get(0), locationActual);
+		//Location locationActual = locationManagementService.createLocation(this.locList.get(0));
+		//assertEquals(this.locList.get(0), locationActual);
 	}
 	
 	@Test
