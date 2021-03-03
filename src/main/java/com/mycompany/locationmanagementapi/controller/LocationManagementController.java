@@ -45,15 +45,19 @@ public class LocationManagementController {
 		if(locations != null & locations.isEmpty()){
 			return new ResponseEntity<List<Location>>(HttpStatus.NOT_FOUND);
 		}else{
-			return new ResponseEntity<List<Location>>(HttpStatus.OK);
+			return new ResponseEntity<List<Location>>(locations , HttpStatus.OK);
 		}
 		
    	}
 	
 	@GetMapping("/locations/{id}")
 	public ResponseEntity<Location> getLocationDetal(@PathVariable("id") Long id ){
+		Optional<Location> locationOpt = null;
 		//new changes
-		Optional<Location> locationOpt = null;	
+		int a = 5;
+		int b = 10;
+		int c = a+b;
+		System.out.println(c);
 			locationOpt = locationManagementService.getLocationDetail(id);
 			if(!locationOpt.isPresent()){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
